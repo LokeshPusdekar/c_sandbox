@@ -23,9 +23,8 @@ int store(student* s, int index, int size)
         scanf("%d%s %c",&s[index].rollno,s[index].name,&s[index].section);
         index++;
     }
-    printf("Index = %d\n",index);
-    // printf("\n What to add more Student details:\n(1)Yes \n(2)No\n");
-    // scanf("%d",&choice);
+    printf("%d Student details is added to the Database.\n",index);
+
         
     // printf("\n");
     return index;
