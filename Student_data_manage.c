@@ -220,7 +220,54 @@ void update(student* s, int size)
         printf("Invalid search option.\n");
     }
 }
+void delete(student* s, int *size)
+{
+    int choice,id,k=0,delete=0,index;
+    char Name[20];
 
+    printf("Search by: \n(1)Id\n(2)Name \n");
+    scanf("%d",&choice);
+
+    if (choice == 1)
+    {
+        printf("Enter the Student Roll Number:");
+        scanf("%d",&id);
+
+        for (int j = 0; j < *size; j++)
+        {
+            if (s[j].rollno == id)
+            {
+                index = j;
+                break;
+            }
+            
+        }
+        
+        for (int k = index; k < *size - 1; k++)
+        {
+            s[k].rollno =s[k+1].rollno;  
+            strcpy(s[k].name, s[k+1].name); 
+            s[k].section =s[k+1].section; 
+            delete = 1;
+            (*size)--;
+        }   
+
+        if (delete == 1)
+        {
+            printf("Student with Roll No. %d is deleted.\n", id); 
+        }  
+        else
+        {
+            printf("Student with Roll No. %d is not deleted.\n", id);
+        }     
+    }
+
+    else
+    {
+        printf("Invalid search option.\n");
+    }
+    
+}
 int main()
 {   
     int size=3,n,i=0;
@@ -255,9 +302,11 @@ int main()
         case 4:
             update(s, size);
             break;
-        // case 5:
-        //     delete(s, &size);
-        //     break;
+
+        case 5:
+            delete(s, &size);
+            break;
+
         case 6:
             i = 1;
             printf("Exiting.......");
