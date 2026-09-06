@@ -12,14 +12,22 @@ typedef struct student
     char section;
 }student;
 
-void store(student* s, int size)
-{
-    for (int i = 0; i < size; i++)
+int store(student* s, int index, int size)
+{   
+    int choice;
+    
+    for (int i = index; i < size; i++)
     {
         printf("Enter the details of student repectively:(Roll no., Name, Section):\n");
-        scanf("%d%s %c",&s[i].rollno,s[i].name,&s[i].section);
+        scanf("%d%s %c",&s[index].rollno,s[index].name,&s[index].section);
+        index++;
     }
+    printf("Index = %d\n",index);
+    // printf("\n What to add more Student details:\n(1)Yes \n(2)No\n");
+    // scanf("%d",&choice);
+        
     // printf("\n");
+    return index;
 }
 
 void display(student* s, int size)
@@ -95,6 +103,88 @@ void search(student* s, int size)
         {
             printf("Student with Name: %s is not found.\n",Name);
         }        
+    }
+    else
+    {
+        printf("Invalid search option.\n");
+    }
+    
+}
+
+void delete(student* s, int *size)
+{
+    int choice,id,k=0,delete=0,index;
+    char Name[20];
+
+    printf("Search by: \n(1)Id\n(2)Name \n");
+    scanf("%d",&choice);
+
+    if (choice == 1)
+    {
+        printf("Enter the Student Roll Number:");
+        scanf("%d",&id);
+
+        for (int j = 0; j < *size; j++)
+        {
+            if (s[j].rollno == id)
+            {
+                index = j;
+                break;
+            }
+            
+        }
+        
+        for (int k = index; k < *size - 1; k++)
+        {
+            s[k].rollno =s[k+1].rollno;  
+            strcpy(s[k].name, s[k+1].name); 
+            s[k].section =s[k+1].section; 
+            delete = 1;
+            (*size)--;
+        }   
+
+        if (delete == 1)
+        {
+            printf("Student with Roll No. %d is deleted.\n", id); 
+        }  
+        else
+        {
+            printf("Student with Roll No. %d is not deleted.\n", id);
+        }     
+    }
+    else if (choice == 2)
+    {
+        printf("Enter the Student Name:");
+        scanf("%s",Name);
+
+        for (int j = 0; j < *size; j++)
+        {
+            if (strcmp(s[j].name, Name)  == 0)
+            {
+                index = j;
+                break;
+            }
+            
+        }    
+
+        for (int k = index; k < *size - 1; k++)
+        {
+            s[k].rollno =s[k+1].rollno;  
+            strcpy(s[k].name, s[k+1].name); 
+            s[k].section =s[k+1].section; 
+            delete = 1;
+            (*size)--;
+        }
+
+        if (delete == 1)
+        {
+            printf("Student with Roll No. %s is deleted.\n", Name); 
+        }  
+        else
+        {
+            printf("Student with Roll No. %s is not deleted.\n", Name);
+        }
+        
     }
     else
     {
@@ -220,94 +310,22 @@ void update(student* s, int size)
         printf("Invalid search option.\n");
     }
 }
-void delete(student* s, int *size)
-{
-    int choice,id,k=0,delete=0,index;
-    char Name[20];
 
-    printf("Search by: \n(1)Id\n(2)Name \n");
-    scanf("%d",&choice);
+// int array_size(student s)
+// {   
+//     int size;
+//     printf("How many student details you want to enter:");
+//     scanf("%d",&size);
+//     return size;
+// }
 
-    if (choice == 1)
-    {
-        printf("Enter the Student Roll Number:");
-        scanf("%d",&id);
-
-        for (int j = 0; j < *size; j++)
-        {
-            if (s[j].rollno == id)
-            {
-                index = j;
-                break;
-            }
-            
-        }
-        
-        for (int k = index; k < *size - 1; k++)
-        {
-            s[k].rollno =s[k+1].rollno;  
-            strcpy(s[k].name, s[k+1].name); 
-            s[k].section =s[k+1].section; 
-            delete = 1;
-            (*size)--;
-        }   
-
-        if (delete == 1)
-        {
-            printf("Student with Roll No. %d is deleted.\n", id); 
-        }  
-        else
-        {
-            printf("Student with Roll No. %d is not deleted.\n", id);
-        }     
-    }
-    else if (choice == 2)
-    {
-        printf("Enter the Student Name:");
-        scanf("%s",Name);
-
-        for (int j = 0; j < *size; j++)
-        {
-            if (strcmp(s[j].name, Name)  == 0)
-            {
-                index = j;
-                break;
-            }
-            
-        }    
-
-        for (int k = index; k < *size - 1; k++)
-        {
-            s[k].rollno =s[k+1].rollno;  
-            strcpy(s[k].name, s[k+1].name); 
-            s[k].section =s[k+1].section; 
-            delete = 1;
-            (*size)--;
-        }
-
-        if (delete == 1)
-        {
-            printf("Student with Roll No. %s is deleted.\n", Name); 
-        }  
-        else
-        {
-            printf("Student with Roll No. %s is not deleted.\n", Name);
-        }
-    }    
-    else
-    {
-        printf("Invalid search option.\n");
-    }
-    
-}
 int main()
 {   
-    int size=3,n,i=0;
+    int size,n,i=0,index=0;
     //student* s = (int*) malloc (size * sizeof(student));
     student s[100];
 
-    printf("How many student details you want to enter:");
-    scanf("%d",&size);
+    //size = array_size(*s);
 
     while(i == 0)
     {
@@ -320,7 +338,9 @@ int main()
         switch (n)
         {
         case 1:
-            store(s, size);
+            printf("How many student details you want to enter:");
+            scanf("%d",&size);
+            index = store(s,index,size);
             break;
 
         case 2:
@@ -334,11 +354,9 @@ int main()
         case 4:
             update(s, size);
             break;
-
         case 5:
             delete(s, &size);
             break;
-
         case 6:
             i = 1;
             printf("Exiting.......");
