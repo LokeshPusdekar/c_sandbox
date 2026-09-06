@@ -261,7 +261,39 @@ void delete(student* s, int *size)
             printf("Student with Roll No. %d is not deleted.\n", id);
         }     
     }
+    else if (choice == 2)
+    {
+        printf("Enter the Student Name:");
+        scanf("%s",Name);
 
+        for (int j = 0; j < *size; j++)
+        {
+            if (strcmp(s[j].name, Name)  == 0)
+            {
+                index = j;
+                break;
+            }
+            
+        }    
+
+        for (int k = index; k < *size - 1; k++)
+        {
+            s[k].rollno =s[k+1].rollno;  
+            strcpy(s[k].name, s[k+1].name); 
+            s[k].section =s[k+1].section; 
+            delete = 1;
+            (*size)--;
+        }
+
+        if (delete == 1)
+        {
+            printf("Student with Roll No. %s is deleted.\n", Name); 
+        }  
+        else
+        {
+            printf("Student with Roll No. %s is not deleted.\n", Name);
+        }
+    }    
     else
     {
         printf("Invalid search option.\n");
