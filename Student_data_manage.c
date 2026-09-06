@@ -14,9 +14,10 @@ typedef struct student
 
 int store(student* s, int index, int size)
 {   
-    int choice;
+    int choice,increment_size=0;
+    //increment_size = index + size;
     
-    for (int i = index; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         printf("Enter the details of student repectively:(Roll no., Name, Section):\n");
         scanf("%d%s %c",&s[index].rollno,s[index].name,&s[index].section);
@@ -344,18 +345,18 @@ int main()
             break;
 
         case 2:
-            display(s, size);
+            display(s, index);
             break;
 
         case 3:
-            search(s, size);
+            search(s, index);
             break;
 
         case 4:
-            update(s, size);
+            update(s, index);
             break;
         case 5:
-            delete(s, &size);
+            delete(s, &index);
             break;
         case 6:
             i = 1;
