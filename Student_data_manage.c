@@ -163,7 +163,58 @@ void update(student* s, int size)
             printf("Student with Roll No. %d is not updated.\n", id);
         }     
     }
+    else if (choice == 2)
+    {
+        printf("Enter the Student Name:");
+        scanf("%s",name);
 
+        for ( int k= 0; k < size; k++)
+        {
+            if (strcmp(s[k].name, name) == 0)
+            {
+                count = k;
+            }
+            
+        }
+
+        printf("What do you want to Update:\n(1)Name \n(2)Roll number \n(3)Section\n");
+        scanf("%d",&i);
+
+        if (i == 1)
+        {   
+            printf("Enter the new name:\n");
+            scanf("%s",upd_name);
+            strcpy(s[count].name, upd_name);
+            update = 1;
+        }
+        else if (i == 2)
+        {
+            printf("Enter the new Roll number:\n");
+            scanf("%d",&roll);
+            s[count].rollno = roll;
+            update = 1;
+        }
+        else if (i == 3)
+        {
+            printf("Enter the new Section:\n");
+            scanf("%d",&sec);
+            s[count].section = sec;
+            update = 1;
+        }
+        else
+        {
+            printf("Invalid Choice.\n");
+        }
+      
+        if (update == 1)
+        {
+            printf("Student with Name: %s is updated.\n", name); 
+        }  
+        else
+        {
+            printf("Student with Name: %s is not updated.\n", name);
+        }     
+    }
     else
     {
         printf("Invalid search option.\n");
